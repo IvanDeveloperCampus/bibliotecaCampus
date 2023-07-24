@@ -41,5 +41,20 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
     }
   });
 
+  /**; */
+
+  libroRouter.get("/getLibrosPrestados", async (req, res) => {
+    try {
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo, prestamo.fecha_devolucion FROM libro INNER JOIN prestamo ON libro.id_libro=prestamo.id_libro WHERE prestamo.estado='Prestado'");
+      if (result.length === 0) {
+        return res.status(204).send(`No hay libros Prestados`);
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
+
 
 export default libroRouter;
