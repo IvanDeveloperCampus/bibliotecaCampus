@@ -1,0 +1,6 @@
+PORT=5001
+HOSTNAME=?
+NAME_USER=?
+PASSWORD=?
+DATABASE=db_campus_biblioteca
+JWT_PRIMARY_KEY=campus
