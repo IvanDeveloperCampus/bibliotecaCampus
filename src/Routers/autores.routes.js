@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const autorRouter = Router();
 
-autorRouter.get("/getAutores", async (req, res) => {
+autorRouter.get("/getAutores", verifyToken,async (req, res) => {
   try {
     const con = await getConnection();
     const [result] = await con.execute("SELECT * FROM autor");

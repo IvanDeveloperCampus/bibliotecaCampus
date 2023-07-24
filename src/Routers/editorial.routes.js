@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const editorialRouter = Router();
 
-editorialRouter.get("/getEditoriales", async (req, res) => {
+editorialRouter.get("/getEditoriales", verifyToken,async (req, res) => {
   try {
     const con = await getConnection();
     const [result] = await con.execute("SELECT nombre, direccion FROM editorial");

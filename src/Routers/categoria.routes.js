@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const categoriaRouter = Router();
 
-categoriaRouter.get("/getCategorias", async (req, res) => {
+categoriaRouter.get("/getCategorias", verifyToken, async (req, res) => {
   try {
     const con = await getConnection();
     const [result] = await con.execute("SELECT * FROM categoria");

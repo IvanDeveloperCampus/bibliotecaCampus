@@ -1,10 +1,11 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const prestamoRouter = Router();
 
 
-prestamoRouter.get("/getPrestamos", async (req, res) => {
+prestamoRouter.get("/getPrestamos", verifyToken,async (req, res) => {
   try {
     const con = await getConnection();
     const [result] = await con.execute("SELECT fecha_prestamo,fecha_devolucion, estado direccion FROM prestamo");
@@ -17,7 +18,7 @@ prestamoRouter.get("/getPrestamos", async (req, res) => {
   }
 });
 
-prestamoRouter.get("/getPrestamosUsuarioEspecifico", async (req, res) => {
+prestamoRouter.get("/getPrestamosUsuarioEspecifico", verifyToken,async (req, res) => {
     try {
         const { nombreApellido }=req.query
       const con = await getConnection();

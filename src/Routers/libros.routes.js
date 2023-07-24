@@ -1,5 +1,6 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const libroRouter = Router();
 
@@ -86,7 +87,7 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
     }
   });
 
-  libroRouter.get("/getLibrosMayoresPagina", async (req, res) => {
+  libroRouter.get("/getLibrosMayoresPagina",verifyToken, async (req, res) => {
     try {
       const con = await getConnection();
       const [result] = await con.execute("SELECT libro.titulo AS libro, autor.nombre AS autor FROM `libro` INNER JOIN autor ON libro.id_autor=autor.id_autor WHERE num_paginas>500;");

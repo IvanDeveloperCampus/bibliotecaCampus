@@ -1,10 +1,11 @@
 import { Router } from "express";
 import getConnection from "../db/database.js";
+import { verifyToken } from "../Middlwares/jwt.js";
 
 const reservaRouter = Router();
 
 
-reservaRouter.get("/getReservas", async (req, res) => {
+reservaRouter.get("/getReservas", verifyToken, async (req, res) => {
   try {
     const con = await getConnection();
     const [result] = await con.execute("SELECT fecha_reserva, estado direccion FROM reserva");
