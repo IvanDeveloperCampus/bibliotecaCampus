@@ -99,6 +99,20 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
         res.status(500).send(error.message)
     }
   });
+
+  libroRouter.get("/getLibrosPrestadosUsuarioEspecifico",verifyToken, async (req, res) => {
+    try {
+      const { nombreApellido }=req.query
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo FROM libro INNER JOIN prestamo ON libro.id_libro = prestamo.id_libro INNER JOIN usuario ON prestamo.id_usuario=usuario.id_usuario WHERE concat(usuario.nombre, ' ', usuario.apellido)=?;", [nombreApellido]);
+      if (result.length === 0) {
+        return res.status(204).send(`No hay libros prestado al usuario ${nombreApellido}`);
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
   
 
 
