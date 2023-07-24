@@ -7,11 +7,13 @@ import libroRouter from "./Routers/libros.routes.js";
 import prestamoRouter from "./Routers/prestamo.routes.js";
 import reservaRouter from "./Routers/reserva.routes.js";
 import usuarioRouter from "./Routers/usuario.routes.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app=express();
 app.use(express.json())
+app.use(cookieParser());
 app.use("/autor", autorRouter)
 app.use('/categoria', categoriaRouter)
 app.use('/editorial', editorialRouter)
