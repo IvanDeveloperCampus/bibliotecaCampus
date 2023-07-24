@@ -5,6 +5,7 @@ import categoriaRouter from "./Routers/categoria.routes.js";
 import editorialRouter from "./Routers/editorial.routes.js";
 import libroRouter from "./Routers/libros.routes.js";
 import prestamoRouter from "./Routers/prestamo.routes.js";
+import reservaRouter from "./Routers/reserva.routes.js";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use('/categoria', categoriaRouter)
 app.use('/editorial', editorialRouter)
 app.use('/libro', libroRouter)
 app.use('/prestamo', prestamoRouter)
+app.use('/reserva', reservaRouter)
 
 
 app.listen(5001, ()=>{
