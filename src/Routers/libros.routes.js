@@ -70,6 +70,21 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
     }
   });
 
+  libroRouter.get("/getLibrosCategoria/:categoria", async (req, res) => {
+    try {
+        const { categoria }=req.params
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo AS libro, categoria.nombre AS categoria FROM libro INNER JOIn categoria ON libro.id_categoria=categoria.id_categoria WHERE categoria.nombre=?", [categoria]);
+      if (result.length === 0) {
+        return res.status(204).json({message:`No hay libros de la categoria ${categoria}`});
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
+  
+
 
 
 export default libroRouter;
