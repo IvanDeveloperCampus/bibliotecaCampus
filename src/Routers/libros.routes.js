@@ -41,7 +41,7 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
     }
   });
 
-  /**; */
+
 
   libroRouter.get("/getLibrosPrestados", async (req, res) => {
     try {
@@ -55,6 +55,21 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
         res.status(500).send(error.message)
     }
   });
+
+  libroRouter.get("/getLibrosAutorEspecifico/:nombreAutor", async (req, res) => {
+    try {
+        const { nombreAutor }=req.params
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo FROM `libro` INNER JOIN autor ON libro.id_autor=autor.id_autor WHERE autor.nombre=?", [nombreAutor]);
+      if (result.length === 0) {
+        return res.status(204).send(`No hay libros del autor ${nombreAutor}`);
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
+
 
 
 export default libroRouter;
