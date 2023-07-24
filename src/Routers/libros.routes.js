@@ -11,7 +11,9 @@ libroRouter.get("/getEstadoLibros", async (req, res) => {
       return res.status(204).send(`No hay libro`);
     }
     res.status(200).send(result);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
 });
 
 
@@ -77,6 +79,19 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
       const [result] = await con.execute("SELECT libro.titulo AS libro, categoria.nombre AS categoria FROM libro INNER JOIn categoria ON libro.id_categoria=categoria.id_categoria WHERE categoria.nombre=?", [categoria]);
       if (result.length === 0) {
         return res.status(204).json({message:`No hay libros de la categoria ${categoria}`});
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
+
+  libroRouter.get("/getLibrosMayoresPagina", async (req, res) => {
+    try {
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo AS libro, autor.nombre AS autor FROM `libro` INNER JOIN autor ON libro.id_autor=autor.id_autor WHERE num_paginas>500;");
+      if (result.length === 0) {
+        return res.status(204).send(`No hay libros de mas de 500 paginas`);
       }
       res.status(200).send(result);
     } catch (error) {
