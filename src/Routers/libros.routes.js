@@ -28,5 +28,18 @@ libroRouter.get("/getLibrosAutorEditorial", async (req, res) => {
     }
   });
 
+  libroRouter.get("/getLibrosDisponibles", async (req, res) => {
+    try {
+      const con = await getConnection();
+      const [result] = await con.execute("SELECT libro.titulo, autor.nombre FROM `libro` INNER JOIN estado_libro ON libro.id_estado=estado_libro.id_estado INNER JOIN autor ON libro.id_autor=autor.id_autor WHERE estado_libro.nombre='Disponible';");
+      if (result.length === 0) {
+        return res.status(204).send(`No hay libros Disponibles`);
+      }
+      res.status(200).send(result);
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+  });
+
 
 export default libroRouter;
