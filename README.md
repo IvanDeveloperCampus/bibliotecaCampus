@@ -4,7 +4,7 @@
     
     2. Ejecutar el siguiente comando para instalar las dependencias necesarias para que funcione => npm i
     
-    3. Configurar archivo .env en la raiz del proyecto y  como esta en el .envexample
+    3. Configurar archivo .env en la raiz del proyecto y  configurarlo como esta en el .envexample con sus datos
     
     4. Ejecutar el proyecto => npm run dev
     
@@ -64,7 +64,6 @@ En primer lugar simularemos un inicio de sesion con los correos disponibles en l
 
     16. Listar los autores de nacionalidad española => http://127.0.0.1:5001/autor/getAutoresEspanioles
 
-    17.Obtener los libros de cierta editorial (ejemplo: Editorial Planeta).
 
 
 
