@@ -12,6 +12,7 @@ app.use(express.json())
 app.use("/autor", autorRouter)
 app.use('/categoria', categoriaRouter)
 app.use('/editorial', editorialRouter)
+app.use('/libro', libroRouter)
 
 
 app.listen(5001, ()=>{
